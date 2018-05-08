@@ -5,6 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.Temperature;
 import models.User;
 
 public class BiometricDatabase {
@@ -14,11 +18,13 @@ public class BiometricDatabase {
     private static final String password = "";
     
     private Connection connection = null;
+    private Statement statement;
     
     public BiometricDatabase() throws ClassNotFoundException, InstantiationException, IllegalAccessException, SQLException {
         // Load the Connector/J driver
         Class.forName("com.mysql.jdbc.Driver").newInstance();
         connection = DriverManager.getConnection(connectionString, username, password);
+        statement = connection.createStatement();
     }
     
     public User registerUser(String name, String email, String password) throws SQLException {
@@ -28,7 +34,6 @@ public class BiometricDatabase {
                 "'" + password + "'" +
             ")";
 
-        Statement statement = connection.createStatement();
         statement.executeUpdate(query);
         
         return authenticateUser(email, password);
@@ -38,7 +43,6 @@ public class BiometricDatabase {
         String query = "SELECT * FROM users WHERE email = '" + email
                 + "' AND password = SHA2(CONCAT('" + password + "', salt), 256)";
 
-        Statement statement = connection.createStatement();
         ResultSet resultset  = statement.executeQuery(query);
         
         if (resultset.next()) {
@@ -47,5 +51,36 @@ public class BiometricDatabase {
         } else {
             return null;
         }
+    }
+    
+    public void addTemperature(Temperature temperature) {
+        try{
+            String query = 
+                    "INSERT INTO temperatures (value, ownerId)"
+                            + " VALUES("
+                            + temperature.getValue() + ", "
+                            + temperature.getOwner()
+                            + ")";
+            statement.executeUpdate(query);
+        } catch(SQLException ex){
+            Logger.getLogger(BiometricDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public ArrayList<Temperature> getTemperatures(int userId, int limit) {
+        ArrayList temperatures = new ArrayList();
+        try {
+            ResultSet resultset = statement.executeQuery("SELECT * FROM temperatures WHERE user_id"
+                    + "=" + userId + "ORDER BY timestamp DESC LIMIT " + limit);
+            while(resultset.next()){
+                int id = resultset.getInt("id");
+                double value = resultset.getDouble("value");
+                temperatures.add(new Temperature(id, value, userId));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(BiometricDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return temperatures;
     }
 }
