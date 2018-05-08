@@ -1,15 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxml_biometricdatabase.MainDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxml_biometricdatabase.MainDocumentController">
    <children>
       <Label fx:id="username" layoutX="14.0" layoutY="14.0" text="Not logged in">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
+      <LineChart fx:id="chart" layoutX="41.0" layoutY="70.0" prefHeight="360.0" prefWidth="706.0">
+        <xAxis>
+          <NumberAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" />
+        </yAxis>
+      </LineChart>
+      <Button fx:id="generate" layoutX="562.0" layoutY="447.0" mnemonicParsing="false" onAction="#handleGenerate" text="Generate Data">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="loadFromDatabase" layoutX="35.0" layoutY="447.0" mnemonicParsing="false" onAction="#handleLoadFromDatabase" text="Load from Database">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

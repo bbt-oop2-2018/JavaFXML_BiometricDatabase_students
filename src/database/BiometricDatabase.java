@@ -56,7 +56,7 @@ public class BiometricDatabase {
     public void addTemperature(Temperature temperature) {
         try{
             String query = 
-                    "INSERT INTO temperatures (value, ownerId)"
+                    "INSERT INTO temperatures (value, user_id)"
                             + " VALUES("
                             + temperature.getValue() + ", "
                             + temperature.getOwner()
@@ -71,7 +71,7 @@ public class BiometricDatabase {
         ArrayList temperatures = new ArrayList();
         try {
             ResultSet resultset = statement.executeQuery("SELECT * FROM temperatures WHERE user_id"
-                    + "=" + userId + "ORDER BY timestamp DESC LIMIT " + limit);
+                    + "=" + userId + " ORDER BY timestamp DESC LIMIT " + limit);
             while(resultset.next()){
                 int id = resultset.getInt("id");
                 double value = resultset.getDouble("value");
