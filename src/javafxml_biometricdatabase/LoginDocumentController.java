@@ -31,12 +31,6 @@ public class LoginDocumentController implements Initializable {
     
     @FXML
     private void handleLogin(ActionEvent event) throws SQLException, IOException {
-        User user = Context.getDatabase().authenticateUser(email.getText(), password.getText());
-        
-        if (user != null) {
-            MainDocumentController controller = (MainDocumentController)SceneLoader.getInstance().loadScene(this, "MainDocument", root);
-            controller.setUser(user);
-        }
     }
     
     @FXML

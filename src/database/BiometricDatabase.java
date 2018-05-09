@@ -28,59 +28,17 @@ public class BiometricDatabase {
     }
     
     public User registerUser(String name, String email, String password) throws SQLException {
-        String query = "INSERT into users (name, email, password) VALUES (" +
-                "'" + name + "', " +
-                "'" + email + "', " +
-                "'" + password + "'" +
-            ")";
-
-        statement.executeUpdate(query);
-        
-        return authenticateUser(email, password);
+        return null;
     }
     
     public User authenticateUser(String email, String password) throws SQLException {
-        String query = "SELECT * FROM users WHERE email = '" + email
-                + "' AND password = SHA2(CONCAT('" + password + "', salt), 256)";
-
-        ResultSet resultset  = statement.executeQuery(query);
-        
-        if (resultset.next()) {
-            return new User(resultset.getInt("id"),
-                resultset.getString("name"), resultset.getString("email"));
-        } else {
-            return null;
-        }
+        return null;
     }
     
     public void addTemperature(Temperature temperature) {
-        try{
-            String query = 
-                    "INSERT INTO temperatures (value, user_id)"
-                            + " VALUES("
-                            + temperature.getValue() + ", "
-                            + temperature.getOwner()
-                            + ")";
-            statement.executeUpdate(query);
-        } catch(SQLException ex){
-            Logger.getLogger(BiometricDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
     
     public ArrayList<Temperature> getTemperatures(int userId, int limit) {
-        ArrayList temperatures = new ArrayList();
-        try {
-            ResultSet resultset = statement.executeQuery("SELECT * FROM temperatures WHERE user_id"
-                    + "=" + userId + " ORDER BY timestamp DESC LIMIT " + limit);
-            while(resultset.next()){
-                int id = resultset.getInt("id");
-                double value = resultset.getDouble("value");
-                temperatures.add(new Temperature(id, value, userId));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(BiometricDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        return temperatures;
+        return null;
     }
 }

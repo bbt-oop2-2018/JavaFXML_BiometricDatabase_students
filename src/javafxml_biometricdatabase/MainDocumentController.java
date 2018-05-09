@@ -27,25 +27,14 @@ public class MainDocumentController implements Initializable {
     
     public void setUser(User user) {
         this.user = user;
-        username.setText("Welcome " + user.getName());
     }
     
     @FXML
     private void handleLoadFromDatabase(ActionEvent event) {
-        ArrayList<Temperature> temperatures = Context.getDatabase().getTemperatures(user.getId(), 50);
-        
-        dataValues.getData().clear();
-        xValue = 0;
-        for (Temperature temperature : temperatures) {
-            addDataValue(temperature.getValue());
-        }
     }
     
     @FXML
     private void handleGenerate(ActionEvent event) {
-        Temperature temp = new Temperature(generator.generate(), user.getId());
-        Context.getDatabase().addTemperature(temp);
-        addDataValue(temp.getValue());
     }
     
     @Override

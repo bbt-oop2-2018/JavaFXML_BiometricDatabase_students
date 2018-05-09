@@ -6,21 +6,4 @@
 package models;
 
 public class Temperature {
-
-    private int id;
-    private double value;
-    private int ownerId;
-    
-    public Temperature(double value, int ownerId) {
-        this(0, value, ownerId);
-    }
-    
-    public Temperature(int id, double value, int ownerId) {
-        this.id = id;
-        this.value = value;
-        this.ownerId = ownerId;
-    }
-    
-    public double getValue() { return value; }
-    public int getOwner() { return ownerId; }
 }

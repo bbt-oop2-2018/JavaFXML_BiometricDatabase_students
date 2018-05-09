@@ -28,10 +28,5 @@ public class RegisterDocumentController implements Initializable {
     
     @FXML
     private void handleRegister(ActionEvent event) throws IOException, SQLException {
-        User user = Context.getDatabase().registerUser(name.getText(), email.getText(), password.getText());
-        if (user != null) {
-            MainDocumentController controller = (MainDocumentController)SceneLoader.getInstance().loadScene(this, "MainDocument", root);
-            controller.setUser(user);
-        }
     } 
 }
